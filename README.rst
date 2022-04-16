@@ -1,12 +1,6 @@
 Django REST Framework Bulk
 ==========================
 
-.. image:: https://badge.fury.io/py/djangorestframework-bulk.png
-    :target: http://badge.fury.io/py/djangorestframework-bulk
-
-.. image:: https://travis-ci.org/miki725/django-rest-framework-bulk.svg?branch=master
-    :target: https://travis-ci.org/miki725/django-rest-framework-bulk
-
 Django REST Framework bulk CRUD view mixins.
 
 Overview
@@ -32,11 +26,11 @@ Installing
 
 Using pip::
 
-    $ pip install djangorestframework-bulk
+    // To be updated
 
 or from source code::
 
-    $ pip install -e git+http://github.com/miki725/django-rest-framework-bulk#egg=djangorestframework-bulk
+    $ pip install -e git+http://github.com/anhtuanngtr/django-rest-framework-bulk#egg=djangorestframework-bulk
 
 Example
 -------
@@ -112,37 +106,13 @@ The bulk router can automatically map the bulk actions::
     router = BulkRouter()
     router.register(r'users', UserViewSet)
 
-DRF3
-----
-
-Django REST Framework made many API changes which included major changes
-in serializers. As a result, please note the following in order to use
-DRF-bulk with DRF3:
-
-* You must specify custom ``list_serializer_class`` if your view(set)
-  will require update functionality (when using ``BulkUpdateModelMixin``)
-* DRF3 removes read-only fields from ``serializer.validated_data``.
-  As a result, it is impossible to correlate each ``validated_data``
-  in ``ListSerializer`` with a model instance to update since ``validated_data``
-  will be missing the model primary key since that is a read-only field.
-  To deal with that, you must use ``BulkSerializerMixin`` mixin in your serializer
-  class which will add the model primary key field back to the ``validated_data``.
-  By default ``id`` field is used however you can customize that field
-  by using ``update_lookup_field`` in the serializers ``Meta``::
-
-    class FooSerializer(BulkSerializerMixin, ModelSerializer):
-        class Meta(object):
-            model = FooModel
-            list_serializer_class = BulkListSerializer
-            update_lookup_field = 'slug'
-
 Notes
 -----
 
-Most API urls have two URL levels for each resource:
+Most API urls have two URL levels for each resource::
 
-1. ``url(r'foo/', ...)``
-2. ``url(r'foo/(?P<pk>\d+)/', ...)``
+    1. ``url(r'foo/', ...)``
+    2. ``url(r'foo/(?P<pk>\d+)/', ...)``
 
 The second url however is not applicable for bulk operations because
 the url directly maps to a single resource. Therefore all bulk
